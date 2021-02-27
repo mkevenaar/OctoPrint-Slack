@@ -20,3 +20,18 @@ updates:
   commit-message:
     prefix: "(maint)"
   target-branch: "develop"
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "daily"
+    time: '04:00'
+  open-pull-requests-limit: 10
+  reviewers:
+  - mkevenaar
+  assignees:
+  - mkevenaar
+  labels:
+  - dependabot
+  commit-message:
+    prefix: "(maint)"
+  target-branch: "develop"
