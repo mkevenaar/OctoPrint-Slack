@@ -14,7 +14,7 @@ plugin_package = "octoprint_slack
 plugin_name = "OctoPrint-Slack"
 
 # The plugin's version. Can be overwritten within OctoPrint's internal data via __plugin_version__ in the plugin module
-plugin_version = "0.2.3"
+plugin_version = "0.2.4-devel"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
@@ -42,6 +42,7 @@ plugin_requires = ['requests']
 # Additional package data to install for this plugin. The subfolders "templates", "static" and "translations" will
 # already be installed automatically if they exist.
 plugin_additional_data = []
+
 # Any additional python packages you need to install with your plugin that are not contains in <plugin_package>.*
 plugin_addtional_packages = []
 
@@ -57,6 +58,11 @@ plugin_ignored_packages = []
 #     plugin_requires = ["someDependency==dev"]
 #     additional_setup_parameters = {"dependency_links": ["https://github.com/someUser/someRepo/archive/master.zip#egg=someDependency-dev"]}
 additional_setup_parameters = {}
+
+# README/long description file to use for PyPi uploads. Must be the full absolute path. If the filename ends on
+# .md and pypandoc is installed a conversion from Markdown to ReStructured Text will be performed utilizing
+# setuptools-markdown as additional setup requirement.
+plugin_readme_file = "README.md"
 
 ########################################################################################################################
 
