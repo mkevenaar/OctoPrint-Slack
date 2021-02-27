@@ -111,7 +111,7 @@ class SlackPlugin(
 				self._logger.exception("Slack Webhook URL not set!")
 				return
 
-			filename = os.path.basename(payload["file"])
+			filename = payload["name"]
 			if payload['origin'] == 'local':
 				origin = "Local"
 			elif payload['origin'] == 'sdcard':
