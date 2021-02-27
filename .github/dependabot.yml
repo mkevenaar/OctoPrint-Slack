@@ -17,3 +17,6 @@ updates:
   - mkevenaar
   labels:
   - dependabot
+  commit-message:
+    prefix: "(maint)"
+  target-branch: "develop"
