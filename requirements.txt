@@ -8,6 +8,6 @@
 
 .
 
-OctoPrint==1.5.3
-setuptools==53.1.0
-requests==2.25.1
+OctoPrint
+setuptools
+requests
