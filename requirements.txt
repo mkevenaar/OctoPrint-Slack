@@ -8,6 +8,6 @@
 
 .
 
-OctoPrint==1.6.1
+OctoPrint>=1.6.0
 setuptools
 requests
