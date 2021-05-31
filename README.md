@@ -1,5 +1,9 @@
 # OctoPrint Slack Integration
 
+[![Version](https://img.shields.io/badge/dynamic/json.svg?color=brightgreen&label=version&url=https://api.github.com/repos/mkevenaar/OctoPrint-Slack/releases&query=$[0].name)]()
+[![Released](https://img.shields.io/badge/dynamic/json.svg?color=brightgreen&label=released&url=https://api.github.com/repos/mkevenaar/OctoPrint-Slack/releases&query=$[0].published_at)]()
+![GitHub Releases (by Release)](https://img.shields.io/github/downloads/mkevenaar/OctoPrint-Slack/latest/total.svg)
+
 Send messages to your group's Slack chat when printing events happen!
 You need to set up an [Incoming Webhook](https://my.slack.com/services/new/incoming-webhook) integration on the Slack side to use this.
 
