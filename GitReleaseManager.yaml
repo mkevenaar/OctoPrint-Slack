@@ -5,6 +5,7 @@ issue-labels-include:
 - Improvement
 - Documentation
 - security
+- enhancement
 issue-labels-exclude:
 - Build
 issue-labels-alias:
