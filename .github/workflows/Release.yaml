@@ -56,7 +56,7 @@ jobs:
       - name: Publish release with GitReleaseManager
         uses: gittools/actions/gitreleasemanager/publish@7417b1089e2c7de93510f1901d656ddf60bb024f # v4.7.0
         with:
-          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           milestone: ${{ steps.gitversion.outputs.majorMinorPatch }}
 
