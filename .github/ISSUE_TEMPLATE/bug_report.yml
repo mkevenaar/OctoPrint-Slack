@@ -1,0 +1,81 @@
+name: Bug report
+description: Report reproducible incorrect behavior in OctoPrint-Slack.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve OctoPrint-Slack. Search existing issues first
+        and never include a Slack webhook URL or another secret in this report.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect instead?
+      placeholder: Describe the observed and expected behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest reliable sequence that demonstrates the problem.
+      placeholder: |
+        1. Configure ...
+        2. Trigger ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: input
+    id: plugin_version
+    attributes:
+      label: OctoPrint-Slack version
+      placeholder: 0.3.0
+    validations:
+      required: true
+
+  - type: input
+    id: octoprint_version
+    attributes:
+      label: OctoPrint version
+      placeholder: 2.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: python_version
+    attributes:
+      label: Python version
+      placeholder: 3.13.7
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Remove webhook URLs, tokens, usernames, and other sensitive values.
+      render: shell
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add screenshots or other details that may help diagnose the issue.
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues for this problem.
+          required: true
+        - label: I removed webhook URLs and other secrets from this report.
+          required: true
+        - label: I agree to follow the project's Code of Conduct.
+          required: true

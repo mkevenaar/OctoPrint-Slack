@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: OctoPrint community support
+    url: https://community.octoprint.org/
+    about: Ask general OctoPrint installation, configuration, or printer questions.
+  - name: Report a security vulnerability
+    url: https://github.com/mkevenaar/OctoPrint-Slack/security/advisories/new
+    about: Privately report a suspected vulnerability instead of opening an issue.

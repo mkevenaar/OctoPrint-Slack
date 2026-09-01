@@ -1,36 +1,23 @@
-<!--- Provide a general summary of your changes in the Title above -->
+## Summary
 
-## Description
-<!--- Describe your changes in detail -->
+<!-- Explain what changed and why. -->
 
-## Related Issue
-<!--- This project only accepts pull requests related to open issues -->
-<!--- If suggesting a new feature or change, please discuss it in an issue first -->
-<!--- If fixing a bug, there should be an issue describing it with steps to reproduce -->
-<!--- Please link to the issue here: -->
+## Related issue
 
-## Motivation and Context
-<!--- Why is this change required? What problem does it solve? -->
+<!-- Use "Closes #123" when this pull request resolves an issue. -->
 
-## How Has This Been Tested?
-<!--- Please describe in detail how you tested your changes. -->
-<!--- Include details of your testing environment, and the tests you ran to -->
-<!--- see how your change affects other areas of the code, etc. -->
+## Verification
 
-## Screenshots (if appropriate):
+<!-- List the commands and manual checks you ran. -->
 
-## Types of changes
-<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
+- [ ] Tests pass locally
+- [ ] Packaging checks pass when packaging metadata changed
+- [ ] OctoPrint 1.x and 2.x compatibility was considered
 
-## Checklist:
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
-<!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-- [ ] My code follows the code style of this project.
-- [ ] My change requires a change to the documentation.
-- [ ] I have updated the documentation accordingly.
-- [ ] I have read the **CONTRIBUTING** document.
-- [ ] I have added tests to cover my changes.
-- [ ] All new and existing tests passed.
+## Checklist
+
+- [ ] The change is focused and targets `develop`
+- [ ] Tests cover new or changed behavior
+- [ ] Documentation is updated where needed
+- [ ] No webhook URLs, credentials, or other secrets are included
+- [ ] Privacy or security implications are described above

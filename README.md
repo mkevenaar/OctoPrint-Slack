@@ -7,6 +7,10 @@
 Send messages to your group's Slack chat when printing events happen!
 You need to set up an [Incoming Webhook](https://my.slack.com/services/new/incoming-webhook) integration on the Slack side to use this.
 
+## Compatibility
+
+OctoPrint-Slack 0.3.0 and newer supports OctoPrint 1.8.3 and newer, including OctoPrint 2.x, on Python 3.7 through 3.x. OctoPrint 2.0 itself requires Python 3.9 or newer.
+
 ## Features
 
 * Select which events you want to trigger a chat notification for
@@ -22,4 +26,8 @@ You need to set up an [Incoming Webhook](https://my.slack.com/services/new/incom
 
 ## Installation
 
-Follow the instructions provided by [OctoPrint](http://plugins.octoprint.org/help/installation/).
+Follow the instructions provided by [OctoPrint](https://plugins.octoprint.org/help/installation/).
+
+## Privacy
+
+The plugin sends configured print-event information to the Slack Incoming Webhook supplied by the OctoPrint administrator. See the [privacy policy](PRIVACY.md) for the exact data involved.

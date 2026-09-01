@@ -1,60 +1,63 @@
-# How to contribute
+# Contributing to OctoPrint-Slack
 
-Contributions to veeam-boxstarter are highly encouraged and desired. Below are some guidelines that will help make the process as smooth as possible.
+Thank you for helping improve OctoPrint-Slack. Bug reports, documentation fixes,
+tests, and code changes are welcome.
 
-## Getting Started
+## Before you start
 
-* Make sure you have a [GitHub account](https://github.com/signup/free)
-* Submit a new issue, assuming one does not already exist.
-  * Clearly describe the issue including steps to reproduce when it is a bug.
-  * Make sure you fill in the earliest version that you know has the issue.
-* Fork the repository on GitHub
+- Search the existing issues before opening a new one.
+- Use the issue forms and include the requested OctoPrint, plugin, and Python
+  versions.
+- Discuss substantial behavior changes in an issue before investing in an
+  implementation.
+- Report security vulnerabilities privately as described in
+  [SECURITY.md](SECURITY.md).
+- Never include a Slack webhook URL, API key, or other secret in an issue, log,
+  screenshot, commit, or pull request.
 
-## Suggesting Enhancements
+## Development setup
 
-We want to know what you think is missing from veeam-boxstarter and how it can be made better.
+Create and activate a virtual environment, then install an OctoPrint version and
+the plugin's test dependencies:
 
-* When submitting an issue for an enhancement, please be as clear as possible about why you think the enhancement is needed and what the benefit of
-it would be.
+```shell
+python -m venv .venv
+python -m pip install --upgrade pip
+python -m pip install "OctoPrint==2.0.0rc4"
+python -m pip install -e ".[test]"
+```
 
-## Making Changes
+Run the test suite:
 
-* From your fork of the repository, create a topic branch where work on your change will take place.
-* To quickly create a topic branch based on master; `git checkout -b my_contribution master`. Please avoid working directly on the `master` branch.
-* Make commits of logical units.
-* Check for unnecessary whitespace with `git diff --check` before committing.
-* Please follow the prevailing code conventions in the repository. Differences in style make the code harder to understand for everyone.
-* Make sure your commit messages are in the proper format.
+```shell
+python -m pytest
+```
 
-  ````text
-  Add more cowbell to Get-Something
+To validate the distributable packages:
 
-  The functionaly of Get-Something would be greatly improved if there was a little
-  more 'pizzazz' added to it. I propose a cowbell. Adding more cowbell has been
-  shown in studies to both increase one's mojo, and cement one's status
-  as a rock legend.
-  ````
+```shell
+python -m pip install build twine
+python -m build
+python -m twine check dist/*
+```
 
-* Make sure you have added all the necessary unit tests for your changes.
-* Run _all_ unit tests to assure nothing else was accidentally broken.
+## Making changes
 
-## Documentation
+1. Fork the repository and create a focused branch from `develop`.
+2. Follow the existing Python and template conventions.
+3. Add or update tests for behavior changes.
+4. Update documentation when configuration, compatibility, or privacy behavior
+   changes.
+5. Run the tests and `git diff --check` before submitting your work.
 
-We are infallible and as such the documenation needs no corectoin. In the highly
-unlikely event that that is _not_ the case, commits to update or add documentation
-are highly apprecaited.
+Keep commits focused and write an imperative summary, for example:
+`Handle printer storage event origins`.
 
-## Submitting Changes
+## Pull requests
 
-* Push your changes to a topic branch in your fork of the repository.
-* Submit a pull request to the main repository.
-* Once the pull request has been reviewed and accepted, it will be merged with the master branch.
-* Celebrate
+Open pull requests against `develop`. Explain the problem and solution, link any
+related issue, and list the verification you performed. The CI workflow must
+pass before a change is merged.
 
-## Additional Resources
-
-* [General GitHub documentation](https://help.github.com/)
-* [GitHub forking documentation](https://guides.github.com/activities/forking/)
-* [GitHub pull request documentation](https://help.github.com/send-pull-requests/)
-* [GitHub Flow guide](https://guides.github.com/introduction/flow/)
-* [GitHub's guide to contributing to open source projects](https://guides.github.com/activities/contributing-to-open-source/)
+By participating in this project, you agree to follow the
+[Code of Conduct](CODE_OF_CONDUCT.md).

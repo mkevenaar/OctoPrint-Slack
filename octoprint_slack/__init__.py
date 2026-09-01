@@ -1,12 +1,23 @@
-# coding=utf-8
-from __future__ import absolute_import
+import datetime
 
-import os
-import json
 import octoprint.plugin
 import requests
+from octoprint.filemanager.destinations import FileDestinations
+from octoprint.util import get_formatted_timedelta
 
-from flask_login import current_user
+
+SLACK_REQUEST_TIMEOUT = 10
+
+
+def _display_origin(origin):
+    printer_origin = getattr(
+        FileDestinations, "PRINTER", FileDestinations.SDCARD
+    )
+    if origin == FileDestinations.LOCAL:
+        return "Local"
+    if origin in (FileDestinations.SDCARD, printer_origin):
+        return "Printer"
+    return origin
 
 
 class SlackPlugin(
@@ -58,26 +69,17 @@ class SlackPlugin(
             ),
         )
 
-    def on_settings_load(self):
-        data = octoprint.plugin.SettingsPlugin.on_settings_load(self)
-
-        # only return our restricted settings to admin users - this is only needed for OctoPrint <= 1.2.16
-        restricted = ("webhook_url",)
-        for r in restricted:
-            if r in data and (current_user is None or current_user.is_anonymous() or not current_user.is_admin()):
-                data[r] = None
-
-        return data
-
     def get_settings_restricted_paths(self):
-        # only used in OctoPrint versions > 1.2.16
         return dict(admin=[["webhook_url"], ])
+
+    def get_settings_reauth_requirements(self):
+        return {"webhook_url": True}
 
     def get_settings_version(self):
         return 3
 
     def on_settings_migrate(self, target, current):
-        if current == 1 or current == 2:
+        if current in (1, 2):
             events = self._settings.get(['events'])
             # migrate events
             print_events = self._settings.get(['print_events'])
@@ -91,16 +93,14 @@ class SlackPlugin(
             self._settings.set(['events'], None)
             # clean up old fallback messages from <1.2.7 oversaving
             for event in print_events:
-                try:
-                    self._settings.remove(['print_events', event, 'Fallback'])
-                except ValueError:
-                    # Remove fallback for bug in 1.2.8 and earlier
-                    self._settings.settings.remove(
-                        self._settings._prefix_path(['print_events', event, 'Fallback']))
+                self._settings.remove(['print_events', event, 'Fallback'])
 
     ##~~ TemplatePlugin
     def get_template_configs(self):
         return [dict(type="settings", name="Slack", custom_bindings=False)]
+
+    def is_template_autoescaped(self):
+        return True
 
     ##~~ EventPlugin
     def on_event(self, event, payload):
@@ -110,16 +110,11 @@ class SlackPlugin(
 
             webhook_url = self._settings.get(['webhook_url'])
             if not webhook_url:
-                self._logger.exception("Slack Webhook URL not set!")
+                self._logger.warning("Slack Webhook URL not set!")
                 return
 
             filename = payload["name"]
-            if payload['origin'] == 'local':
-                origin = "Local"
-            elif payload['origin'] == 'sdcard':
-                origin = "SD Card"
-            else:
-                origin = payload['origin']
+            origin = _display_origin(payload['origin'])
 
             message = {}
 
@@ -156,20 +151,20 @@ class SlackPlugin(
                 {"title": "Origin", "value": origin, "short": True})
 
             # event settings
-            event = self._settings.get(['print_events', event], merged=True)
+            event_settings = self._settings.get(
+                ['print_events', event], merged=True
+            )
 
-            import datetime
-            import octoprint.util
             if "time" in payload and payload["time"]:
-                elapsed_time = octoprint.util.get_formatted_timedelta(
+                elapsed_time = get_formatted_timedelta(
                     datetime.timedelta(seconds=payload["time"]))
             else:
                 elapsed_time = ""
 
-            attachment['fallback'] = event['Fallback'].format(
+            attachment['fallback'] = event_settings['Fallback'].format(
                 **{'filename': filename, 'time': elapsed_time})
-            attachment['pretext'] = event['Message']
-            attachment['color'] = event['Color']
+            attachment['pretext'] = event_settings['Message']
+            attachment['color'] = event_settings['Color']
             if elapsed_time != "":
                 attachment['fields'].append(
                     {"title": "Time", "value": elapsed_time, "short": True})
@@ -177,14 +172,18 @@ class SlackPlugin(
             self._logger.debug(
                 "Attempting post of Slack message: {}".format(message))
             try:
-                res = requests.post(webhook_url, data=json.dumps(message))
-            except Exception as e:
+                res = requests.post(
+                    webhook_url,
+                    json=message,
+                    timeout=SLACK_REQUEST_TIMEOUT,
+                )
+            except requests.RequestException as e:
                 self._logger.exception(
                     "An error occurred connecting to Slack:\n {}".format(e))
                 return
 
             if not res.ok:
-                self._logger.exception(
+                self._logger.error(
                     "An error occurred posting to Slack:\n {}".format(res.text))
                 return
 
@@ -232,7 +231,10 @@ class SlackPlugin(
 
 
 __plugin_name__ = "Slack"
-__plugin_pythoncompat__ = ">=2.7,<4"
+__plugin_privacypolicy__ = (
+    "https://github.com/mkevenaar/OctoPrint-Slack/blob/main/PRIVACY.md"
+)
+__plugin_pythoncompat__ = ">=3.7,<4"
 
 
 def __plugin_load__():

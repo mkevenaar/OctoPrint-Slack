@@ -1,0 +1,53 @@
+[build-system]
+requires = [
+    "setuptools>=61",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "OctoPrint-Slack"
+version = "0.3.0"
+description = "Slack integration for OctoPrint"
+authors = [
+    { name = "Maurice Kevenaar", email = "maurice@kevenaar.name" },
+]
+requires-python = ">=3.7,<4"
+dependencies = [
+    "requests>=2,<3",
+]
+dynamic = [
+    "license",
+]
+
+[project.entry-points."octoprint.plugin"]
+slack = "octoprint_slack"
+
+[project.urls]
+Homepage = "https://github.com/mkevenaar/OctoPrint-Slack"
+Issues = "https://github.com/mkevenaar/OctoPrint-Slack/issues"
+Privacy = "https://github.com/mkevenaar/OctoPrint-Slack/blob/main/PRIVACY.md"
+Repository = "https://github.com/mkevenaar/OctoPrint-Slack"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7",
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = [
+    "octoprint_slack",
+    "octoprint_slack.*",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = [
+    "tests",
+]
